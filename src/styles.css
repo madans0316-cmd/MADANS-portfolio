@@ -134,8 +134,9 @@
     border-radius: 9999px;
     padding: 8px 10px;
     background: color-mix(in oklab, var(--paper) 55%, transparent);
-    backdrop-filter: blur(18px) saturate(180%);
     -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid var(--border);
     border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
     box-shadow:
       0 1px 0 color-mix(in oklab, white 60%, transparent) inset,
@@ -156,6 +157,7 @@
     mix-blend-mode: screen;
   }
   .nova-link {
+    color: var(--foreground);
     color: color-mix(in oklab, var(--foreground) 75%, transparent);
   }
   .nova-link:hover {
@@ -187,6 +189,9 @@
       transparent 360deg
     );
     -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
