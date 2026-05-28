@@ -1,8 +1,16 @@
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Download, ExternalLink, Linkedin, ChevronDown } from "lucide-react";
+import { Download, ExternalLink, ChevronDown } from "lucide-react";
 import { ScrollProgress } from "./ScrollProgress";
 import { LiveClock } from "./LiveClock";
+
+function LinkedInSvg({ className }: Readonly<{ className?: string }>) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
 
 const links = [
   { href: "#top", label: "Home" },
@@ -16,7 +24,7 @@ const links = [
 const actionItems = [
   { label: "Download resume", href: "#", icon: Download },
   { label: "View the website", href: "#projects", icon: ExternalLink },
-  { label: "View the LinkedIn", href: "https://linkedin.com", icon: Linkedin },
+  { label: "View the LinkedIn", href: "https://linkedin.com", icon: LinkedInSvg },
 ];
 
 export function Nav() {
@@ -107,8 +115,6 @@ export function Nav() {
               <button
                 onClick={() => setMenuOpen((v) => !v)}
                 className="nova-link flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] font-semibold px-3 py-2 rounded-full"
-                aria-haspopup="menu"
-                aria-expanded={menuOpen}
               >
                 Menu
                 <ChevronDown className={`size-3 transition-transform ${menuOpen ? "rotate-180" : ""}`} />
@@ -129,9 +135,9 @@ export function Nav() {
   );
 }
 
-function AnimatedMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+function AnimatedMenu({ open, onClose }: Readonly<{ open: boolean; onClose: () => void }>) {
   return (
-    <motion.ul
+    <motion.div
       initial={false}
       animate={{
         opacity: open ? 1 : 0,
@@ -140,30 +146,27 @@ function AnimatedMenu({ open, onClose }: { open: boolean; onClose: () => void })
       }}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className="nova-bar absolute right-0 top-[calc(100%+10px)] w-[240px] !rounded-2xl !p-2"
-      role="menu"
     >
       {actionItems.map((it) => {
         const Icon = it.icon;
         const external = it.href.startsWith("http");
         return (
-          <li key={it.label}>
-            <a
-              href={it.href}
-              target={external ? "_blank" : undefined}
-              rel={external ? "noreferrer" : undefined}
-              onClick={onClose}
-              className="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-[11px] uppercase tracking-[0.2em] font-semibold hover:bg-foreground/5 transition-colors"
-              role="menuitem"
-            >
-              <span className="flex items-center gap-2.5">
-                <Icon className="size-3.5" />
-                {it.label}
-              </span>
-              <span className="opacity-30 group-hover:opacity-100 transition-opacity">↗</span>
-            </a>
-          </li>
+          <a
+            key={it.label}
+            href={it.href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noreferrer" : undefined}
+            onClick={onClose}
+            className="group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-[11px] uppercase tracking-[0.2em] font-semibold hover:bg-foreground/5 transition-colors"
+          >
+            <span className="flex items-center gap-2.5">
+              <Icon className="size-3.5" />
+              {it.label}
+            </span>
+            <span className="opacity-30 group-hover:opacity-100 transition-opacity">↗</span>
+          </a>
         );
       })}
-    </motion.ul>
+    </motion.div>
   );
 }
