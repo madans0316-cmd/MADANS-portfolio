@@ -1,0 +1,216 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&family=Epilogue:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap");
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Epilogue", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-paper: var(--paper);
+  --color-paper-warm: var(--paper-warm);
+  --color-ink: var(--ink);
+  --color-ink-deep: var(--ink-deep);
+}
+
+:root {
+  --radius: 0;
+  --paper: oklch(0.971 0.008 85);
+  --paper-warm: oklch(0.926 0.011 85);
+  --ink: oklch(0.27 0.005 85);
+  --ink-deep: oklch(0.14 0 0);
+
+  --background: var(--paper);
+  --foreground: var(--ink-deep);
+  --card: var(--paper);
+  --card-foreground: var(--ink-deep);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink-deep);
+  --primary: var(--ink-deep);
+  --primary-foreground: var(--paper);
+  --secondary: var(--paper-warm);
+  --secondary-foreground: var(--ink-deep);
+  --muted: var(--paper-warm);
+  --muted-foreground: oklch(0.45 0.01 85);
+  --accent: var(--paper-warm);
+  --accent-foreground: var(--ink-deep);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--paper);
+  --border: oklch(0.82 0.012 85);
+  --input: oklch(0.82 0.012 85);
+  --ring: var(--ink);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+  ::selection {
+    background: var(--ink-deep);
+    color: var(--paper);
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-serif-display { font-family: var(--font-serif); }
+  .text-balance { text-wrap: balance; }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .marquee-track { animation: marquee 50s linear infinite; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .hover-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .hover-line:hover { background-size: 100% 1px; }
+
+  .reveal-mask {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  /* Nova Bar — liquid glass pill */
+  .nova-bar {
+    position: relative;
+    border-radius: 9999px;
+    padding: 8px 10px;
+    background: color-mix(in oklab, var(--paper) 55%, transparent);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, white 60%, transparent) inset,
+      0 -1px 0 color-mix(in oklab, var(--foreground) 8%, transparent) inset,
+      0 14px 40px -18px color-mix(in oklab, var(--foreground) 35%, transparent),
+      0 2px 8px -2px color-mix(in oklab, var(--foreground) 10%, transparent);
+    overflow: hidden;
+  }
+  .nova-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(120% 80% at 0% 0%, color-mix(in oklab, white 50%, transparent), transparent 60%),
+      radial-gradient(80% 60% at 100% 100%, color-mix(in oklab, var(--foreground) 8%, transparent), transparent 60%);
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  .nova-link {
+    color: color-mix(in oklab, var(--foreground) 75%, transparent);
+  }
+  .nova-link:hover {
+    color: var(--foreground);
+    background: color-mix(in oklab, var(--foreground) 6%, transparent);
+  }
+
+  /* Black lightning ring around Nova bar (post-load) */
+  .nova-lightning {
+    position: relative;
+  }
+  .nova-lightning::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 9999px;
+    padding: 2px;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      var(--ink-deep) 18deg,
+      transparent 36deg,
+      transparent 120deg,
+      var(--ink-deep) 142deg,
+      transparent 168deg,
+      transparent 240deg,
+      var(--ink-deep) 262deg,
+      transparent 288deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: nova-spin 4.5s linear infinite;
+    pointer-events: none;
+    filter: drop-shadow(0 0 6px color-mix(in oklab, var(--ink-deep) 35%, transparent));
+  }
+  @keyframes nova-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Loader bolt */
+  .bolt-stroke {
+    stroke-dasharray: 240;
+    stroke-dashoffset: 240;
+    animation: bolt-draw 1.4s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  }
+  @keyframes bolt-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nova-lightning::after,
+    .bolt-stroke { animation: none; }
+  }
+}
