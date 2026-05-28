@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Download, ExternalLink, Linkedin, ChevronDown } from "lucide-react";
@@ -75,8 +74,8 @@ export function Nav() {
               aria-label="Theme"
               title="Paper"
             />
-            <Link
-              to="/"
+            <a
+              href="/"
               className="ml-2 font-display text-[11px] md:text-xs font-semibold tracking-[0.22em] uppercase flex items-center gap-2"
             >
               <span className="relative inline-flex h-2 w-2">
@@ -85,7 +84,7 @@ export function Nav() {
               </span>
               <span className="hidden sm:inline">Madan&nbsp;Kumar&nbsp;S</span>
               <span className="sm:hidden">MK·S</span>
-            </Link>
+            </a>
           </div>
 
           <nav className="hidden md:flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] font-medium">
