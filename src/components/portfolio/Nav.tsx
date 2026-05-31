@@ -15,7 +15,7 @@ function LinkedInSvg({ className }: Readonly<{ className?: string }>) {
 const links = [
   { href: "#top", label: "Home" },
   { href: "#skills", label: "Skills" },
-  { href: "#career", label: "Carrier" },
+  { href: "#career", label: "Career" },
   { href: "#education", label: "Education" },
   { href: "#projects", label: "Projects" },
   { href: "#contact", label: "Contact" },
@@ -64,10 +64,11 @@ export function Nav() {
         className="px-4 md:px-8"
       >
         <motion.div
-          layout
+          animate={{
+            maxWidth: scrolled ? 980 : 1000,
+          }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className={`nova-bar pointer-events-auto mx-auto flex items-center justify-between gap-6 ${ringOn ? "nova-lightning" : ""}`}
-          style={{ maxWidth: scrolled ? 980 : 1400 }}
         >
           <div className="flex items-center gap-2 shrink-0 pl-1">
             {/* Two small round shapes (left corner) flanking a minus */}
@@ -145,8 +146,27 @@ function AnimatedMenu({ open, onClose }: Readonly<{ open: boolean; onClose: () =
         pointerEvents: open ? "auto" : "none",
       }}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      className="nova-bar absolute right-0 top-[calc(100%+10px)] w-[240px] !rounded-2xl !p-2"
+      className="nova-bar absolute right-0 top-[calc(100%+10px)] w-[240px] !rounded-2xl !p-2 flex flex-col gap-1"
     >
+      {/* Navigation Links — ONLY visible on mobile/tablet */}
+      <div className="md:hidden flex flex-col gap-0.5 pb-2 border-b border-foreground/10 mb-1">
+        <div className="px-3 pt-1 pb-1 text-[8px] uppercase tracking-[0.25em] text-muted-foreground font-semibold">
+          Navigation
+        </div>
+        {links.map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            onClick={onClose}
+            className="flex items-center justify-between rounded-xl px-3 py-2 text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-foreground/5 transition-colors text-foreground/80 hover:text-foreground"
+          >
+            {l.label}
+            <span className="opacity-20">→</span>
+          </a>
+        ))}
+      </div>
+
+      {/* Actions */}
       {actionItems.map((it) => {
         const Icon = it.icon;
         const external = it.href.startsWith("http");
